@@ -6,12 +6,16 @@
   <title>آواپاد - اشتراک‌گذاری پادکست</title>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       background-color: #0A0A0A;
       color: #FFFFFF;
       font-family: 'Vazirmatn', sans-serif;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
@@ -21,34 +25,54 @@
       text-align: center;
     }
     .container {
-      max-width: 500px;
+      max-width: 440px;
       width: 100%;
-      background-color: #1A1A1A;
-      padding: 24px 20px 30px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      background: linear-gradient(145deg, #1A1A2E, #16213E);
+      padding: 28px 20px 30px;
+      border-radius: 24px;
+      border: 1px solid #2A2A4A;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    }
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
     }
     .app-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      margin-bottom: 10px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+    .app-name {
+      font-size: 18px;
+      font-weight: bold;
+      color: #4A90E2;
     }
     .cover {
-      width: 120px;
-      height: 120px;
-      border-radius: 16px;
+      width: 130px;
+      height: 130px;
+      border-radius: 20px;
       object-fit: cover;
       margin-bottom: 14px;
-      border: 2px solid #333;
+      border: 3px solid #4A90E2;
+      box-shadow: 0 8px 30px rgba(74, 144, 226, 0.25);
+    }
+    .badge {
+      display: inline-block;
+      background-color: #4A90E2;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
     .title {
-      font-size: 20px;
+      font-size: 21px;
       font-weight: bold;
       margin-bottom: 4px;
+      color: #FFFFFF;
     }
     .artist {
       font-size: 14px;
@@ -58,112 +82,157 @@
     .desc {
       font-size: 14px;
       color: #ccc;
-      line-height: 1.7;
+      line-height: 1.8;
       margin-bottom: 18px;
       text-align: justify;
-      padding: 0 10px;
+      padding: 0 6px;
     }
-    .badge {
-      display: inline-block;
-      background-color: #4A90E2;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 12px;
+    .divider {
+      height: 1px;
+      background: #2A2A4A;
+      margin: 14px 0 18px;
     }
-    .share-btn {
+    .listen-btn {
       display: inline-block;
-      background-color: #4A90E2;
+      background: linear-gradient(135deg, #4A90E2, #357ABD);
       color: #fff;
-      padding: 10px 24px;
+      padding: 12px 32px;
       border-radius: 30px;
       text-decoration: none;
       font-weight: bold;
       font-size: 16px;
-      transition: background-color 0.2s;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
     }
-    .share-btn:hover {
-      background-color: #357ABD;
+    .listen-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(74, 144, 226, 0.5);
     }
     .social-buttons {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       margin-top: 16px;
     }
     .social-buttons a {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 8px 16px;
       border-radius: 30px;
       color: white;
       font-size: 13px;
       font-weight: bold;
       text-decoration: none;
-      transition: opacity 0.2s;
+      transition: all 0.2s;
     }
     .social-buttons a:hover {
-      opacity: 0.8;
+      transform: scale(1.05);
+      opacity: 0.9;
     }
-    .whatsapp { background-color: #25D366; }
-    .telegram { background-color: #0088cc; }
-    .instagram { background-color: #E4405F; }
-    .copy-link { background-color: #555; }
+    .whatsapp { background: #25D366; }
+    .telegram { background: #0088cc; }
+    .instagram { background: #E4405F; }
+    .copy-link { background: #4A4A6A; }
     .footer-note {
-      margin-top: 20px;
+      margin-top: 18px;
       font-size: 12px;
       color: #666;
+    }
+    .footer-note a {
+      color: #4A90E2;
+      text-decoration: none;
+    }
+    .footer-note a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
 <div class="container" id="app">
+  <!-- هدر با لوگو -->
+  <div class="app-header">
+    <img class="app-logo" src="https://play-lh.googleusercontent.com/..." alt="آواپاد">
+    <span class="app-name">آواپاد</span>
+  </div>
+
+  <!-- جلد پادکست -->
+  <img id="cover" class="cover" src="https://via.placeholder.com/130/333/666?text=Podcast" alt="جلد پادکست">
   
-  <img class="app-logo" src="assets/logo.png" alt="آواپاد">
-  
-  <img id="cover" class="cover" src="https://via.placeholder.com/120/333/666?text=Podcast" alt="جلد پادکست">
-  <div class="badge" id="badge">🎙️ پادکست ویژه</div>
+  <!-- برچسب و اطلاعات -->
+  <div class="badge" id="badge">🎙️ پادکست</div>
   <div class="title" id="title">عنوان پادکست</div>
   <div class="artist" id="artist">نام گوینده</div>
   <div class="desc" id="desc">توضیحات کوتاه درباره این پادکست یا اپیزود...</div>
 
-  <a href="#" id="listenBtn" class="share-btn">▶ گوش دادن در آواپاد</a>
+  <div class="divider"></div>
 
+  <!-- دکمه گوش دادن (لینک به گوگل‌پلی) -->
+  <a href="#" id="listenBtn" class="listen-btn">▶ گوش دادن در آواپاد</a>
+
+  <!-- دکمه‌های اشتراک‌گذاری -->
   <div class="social-buttons">
-    <a href="#" id="shareWhatsapp" class="whatsapp">واتساپ</a>
-    <a href="#" id="shareTelegram" class="telegram">تلگرام</a>
-    <a href="#" id="shareInstagram" class="instagram">اینستاگرام</a>
+    <a href="#" id="shareWhatsapp" class="whatsapp">💬 واتساپ</a>
+    <a href="#" id="shareTelegram" class="telegram">✈️ تلگرام</a>
+    <a href="#" id="shareInstagram" class="instagram">📸 اینستاگرام</a>
     <a href="#" id="copyLinkBtn" class="copy-link">📋 کپی لینک</a>
   </div>
-  <div class="footer-note">ارسال شده از طریق اپلیکیشن آواپاد</div>
+
+  <div class="footer-note">
+    🎧 ارائه شده توسط <a href="https://play.google.com/store/apps/details?id=com.avapod.app" target="_blank">آواپاد</a>
+  </div>
 </div>
 
 <script>
+  // ============================================================
+  //  داده‌های پادکست‌ها - هر بار که پادکست جدید اضافه میشه، اینجا اضافه کن
+  // ============================================================
   const podcastData = {
+
+    // ===== نمونه ۱: پادکست بی‌پلاس =====
     "pod_123": {
-      title: "پادکست بی‌پلاس",
+      title: "بی‌پلاس",
       artist: "علی بندری",
       description: "هر هفته با یه مهمون جدید، درباره زندگی، تکنولوژی و چالش‌های روزمره.",
-      cover: "https://via.placeholder.com/120/4A90E2/FFF?text=BP",
+      cover: "https://via.placeholder.com/130/4A90E2/FFF?text=BP",
       badge: "🔥 محبوب"
     },
+
+    // ===== نمونه ۲: چند دقیقه با... =====
     "pod_456": {
       title: "چند دقیقه با...",
       artist: "میلاد حاتمی",
       description: "داستان‌های کوتاه و شنیدنی از آدم‌های معمولی که کارهای خارق‌العاده می‌کنند.",
-      cover: "https://via.placeholder.com/120/E74C3C/FFF?text=MD",
+      cover: "https://via.placeholder.com/130/E74C3C/FFF?text=MD",
       badge: "⭐ ویژه"
     },
+
+    // ===== نمونه ۳: پادکست فیکشن =====
+    "pod_789": {
+      title: "پادکست فیکشن",
+      artist: "مرضیه صادقی",
+      description: "داستان‌های تخیلی و شنیدنی با صداگذاری حرفه‌ای. هر هفته یه ماجراجویی جدید.",
+      cover: "https://via.placeholder.com/130/9B59B6/FFF?text=FI",
+      badge: "🎧 داستان"
+    },
+
+    // ============================================================
+    //  پیش‌فرض - اگر آی‌دی پیدا نشد
+    // ============================================================
     "default": {
       title: "پادکست آواپاد",
       artist: "گوینده",
       description: "برای دیدن اطلاعات این پادکست، لطفاً اپلیکیشن آواپاد را باز کنید.",
-      cover: "https://via.placeholder.com/120/333/666?text=Avapod",
+      cover: "https://via.placeholder.com/130/333/666?text=Avapod",
       badge: "🎧 آواپاد"
     }
   };
+
+  // ============================================================
+  //  کد اصلی - لطفاً تغییر نده
+  // ============================================================
 
   function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -173,26 +242,43 @@
   const podcastId = getQueryParam('id') || 'default';
   const data = podcastData[podcastId] || podcastData['default'];
 
+  // نمایش اطلاعات روی صفحه
   document.getElementById('title').innerText = data.title;
   document.getElementById('artist').innerText = data.artist;
   document.getElementById('desc').innerText = data.description;
   document.getElementById('cover').src = data.cover;
   document.getElementById('badge').innerText = data.badge;
-  document.getElementById('listenBtn').href = 'https://avapod.com/app?podcast=' + podcastId;
+
+  // لینک دکمه گوش دادن (به گوگل‌پلی)
+  const marketUrl = 'https://play.google.com/store/apps/details?id=com.avapod.app';
+  document.getElementById('listenBtn').href = marketUrl + '&referrer=share_' + podcastId;
 
   const shareUrl = window.location.href;
 
-  document.getElementById('shareWhatsapp').href = 'https://wa.me/?text=' + encodeURIComponent('🎧 به این پادکست گوش بده: ' + shareUrl);
-  document.getElementById('shareTelegram').href = 'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + '&text=' + encodeURIComponent('🎧 به این پادکست گوش بده:');
-  
+  // دکمه واتساپ
+  document.getElementById('shareWhatsapp').href = 
+    'https://wa.me/?text=' + encodeURIComponent('🎧 به این پادکست گوش بده: ' + shareUrl);
+
+  // دکمه تلگرام
+  document.getElementById('shareTelegram').href = 
+    'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + 
+    '&text=' + encodeURIComponent('🎧 به این پادکست گوش بده:');
+
+  // دکمه اینستاگرام (کپی لینک برای استوری)
   document.getElementById('shareInstagram').addEventListener('click', function(e) {
     e.preventDefault();
-    alert('لینک کپی شد! می‌تونی توی استوری یا دایرکت اینستاگرامت بذاریش:\n' + shareUrl);
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl);
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        alert('✅ لینک کپی شد! حالا می‌تونی توی استوری یا دایرکت اینستاگرام بذاریش.');
+      }).catch(() => {
+        prompt('لینک رو کپی کن:', shareUrl);
+      });
+    } else {
+      prompt('لینک رو کپی کن:', shareUrl);
     }
   });
 
+  // دکمه کپی لینک
   document.getElementById('copyLinkBtn').addEventListener('click', function(e) {
     e.preventDefault();
     if (navigator.clipboard) {
