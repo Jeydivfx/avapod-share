@@ -6,6 +6,7 @@
   <title>آواپاد - اشتراک‌گذاری پادکست</title>
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
   <style>
+    /* استایل‌ها مثل قبل... */
     * {
       margin: 0;
       padding: 0;
@@ -103,6 +104,8 @@
       font-size: 16px;
       transition: all 0.3s;
       box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+      cursor: pointer;
+      border: none;
     }
     .listen-btn:hover {
       transform: translateY(-2px);
@@ -152,16 +155,12 @@
 <body>
 
 <div class="container" id="app">
-  <!-- هدر با لوگو -->
   <div class="app-header">
     <img class="app-logo" src="https://play-lh.googleusercontent.com/..." alt="آواپاد">
     <span class="app-name">آواپاد</span>
   </div>
 
-  <!-- جلد پادکست -->
   <img id="cover" class="cover" src="https://via.placeholder.com/130/333/666?text=Podcast" alt="جلد پادکست">
-  
-  <!-- برچسب و اطلاعات -->
   <div class="badge" id="badge">🎙️ پادکست</div>
   <div class="title" id="title">عنوان پادکست</div>
   <div class="artist" id="artist">نام گوینده</div>
@@ -169,12 +168,9 @@
 
   <div class="divider"></div>
 
-  <!-- دکمه گوش دادن (لینک به گوگل‌پلی) -->
-  <a href="intent://avapod.app/podcast?id=123#Intent;scheme=avapod;package=com.avapod.app;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.avapod.app;end;" class="listen-btn">
-  ▶ گوش دادن در آواپاد
-</a>
+  <!-- دکمه گوش دادن - با جاوااسکریپت مدیریت میشه -->
+  <button id="listenBtn" class="listen-btn">▶ گوش دادن در آواپاد</button>
 
-  <!-- دکمه‌های اشتراک‌گذاری -->
   <div class="social-buttons">
     <a href="#" id="shareWhatsapp" class="whatsapp">💬 واتساپ</a>
     <a href="#" id="shareTelegram" class="telegram">✈️ تلگرام</a>
@@ -189,11 +185,9 @@
 
 <script>
   // ============================================================
-  //  داده‌های پادکست‌ها - هر بار که پادکست جدید اضافه میشه، اینجا اضافه کن
+  //  داده‌های پادکست‌ها
   // ============================================================
   const podcastData = {
-
-    // ===== نمونه ۱: پادکست بی‌پلاس =====
     "pod_123": {
       title: "بی‌پلاس",
       artist: "علی بندری",
@@ -201,8 +195,6 @@
       cover: "https://via.placeholder.com/130/4A90E2/FFF?text=BP",
       badge: "🔥 محبوب"
     },
-
-    // ===== نمونه ۲: چند دقیقه با... =====
     "pod_456": {
       title: "چند دقیقه با...",
       artist: "میلاد حاتمی",
@@ -210,19 +202,6 @@
       cover: "https://via.placeholder.com/130/E74C3C/FFF?text=MD",
       badge: "⭐ ویژه"
     },
-
-    // ===== نمونه ۳: پادکست فیکشن =====
-    "pod_789": {
-      title: "پادکست فیکشن",
-      artist: "مرضیه صادقی",
-      description: "داستان‌های تخیلی و شنیدنی با صداگذاری حرفه‌ای. هر هفته یه ماجراجویی جدید.",
-      cover: "https://via.placeholder.com/130/9B59B6/FFF?text=FI",
-      badge: "🎧 داستان"
-    },
-
-    // ============================================================
-    //  پیش‌فرض - اگر آی‌دی پیدا نشد
-    // ============================================================
     "default": {
       title: "پادکست آواپاد",
       artist: "گوینده",
@@ -233,7 +212,7 @@
   };
 
   // ============================================================
-  //  کد اصلی - لطفاً تغییر نده
+  //  کد اصلی
   // ============================================================
 
   function getQueryParam(param) {
@@ -244,29 +223,50 @@
   const podcastId = getQueryParam('id') || 'default';
   const data = podcastData[podcastId] || podcastData['default'];
 
-  // نمایش اطلاعات روی صفحه
+  // نمایش اطلاعات
   document.getElementById('title').innerText = data.title;
   document.getElementById('artist').innerText = data.artist;
   document.getElementById('desc').innerText = data.description;
   document.getElementById('cover').src = data.cover;
   document.getElementById('badge').innerText = data.badge;
 
-  // لینک دکمه گوش دادن (به گوگل‌پلی)
-  const marketUrl = 'https://play.google.com/store/apps/details?id=com.avapod.app';
-  document.getElementById('listenBtn').href = marketUrl + '&referrer=share_' + podcastId;
+  // ============================================================
+  //  دکمه گوش دادن - ابتدا اپ رو باز کن، اگر نشد برو پلی‌استور
+  // ============================================================
+  const APP_PACKAGE = 'com.avapod.app';
+  const MARKET_URL = 'https://play.google.com/store/apps/details?id=' + APP_PACKAGE;
+  
+  // ساخت Deep Link
+  function getDeepLink(episodeId) {
+    return 'avapod://open?episode=' + episodeId;
+  }
 
+  document.getElementById('listenBtn').addEventListener('click', function() {
+    const episodeId = podcastId;
+    const deepLink = getDeepLink(episodeId);
+    const marketUrl = MARKET_URL + '&referrer=share_' + episodeId;
+    
+    // ۱. اول سعی کن اپ رو باز کنی
+    window.location.href = deepLink;
+    
+    // ۲. اگر اپ باز نشد، بعد از ۲ ثانیه به مارکت برو
+    setTimeout(function() {
+      window.location.href = marketUrl;
+    }, 2000);
+  });
+
+  // ============================================================
+  //  دکمه‌های اشتراک‌گذاری
+  // ============================================================
   const shareUrl = window.location.href;
 
-  // دکمه واتساپ
   document.getElementById('shareWhatsapp').href = 
     'https://wa.me/?text=' + encodeURIComponent('🎧 به این پادکست گوش بده: ' + shareUrl);
 
-  // دکمه تلگرام
   document.getElementById('shareTelegram').href = 
     'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + 
     '&text=' + encodeURIComponent('🎧 به این پادکست گوش بده:');
 
-  // دکمه اینستاگرام (کپی لینک برای استوری)
   document.getElementById('shareInstagram').addEventListener('click', function(e) {
     e.preventDefault();
     if (navigator.clipboard) {
@@ -280,7 +280,6 @@
     }
   });
 
-  // دکمه کپی لینک
   document.getElementById('copyLinkBtn').addEventListener('click', function(e) {
     e.preventDefault();
     if (navigator.clipboard) {
