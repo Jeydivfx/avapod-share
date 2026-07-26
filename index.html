@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>آواپاد - اشتراک‌گذاری پادکست</title>
+  <title>آواپاد - اشتراک‌گذاری پادکست</title>d
   <!-- استفاده از فونت وزیر از CDN -->
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
   <style>
@@ -116,17 +116,19 @@
 <body>
 
 <div class="container" id="app">
-  <!-- محتوای صفحه با جاوااسکریپت پر می‌شه -->
+  
+  <!-- ====== لوگوی اپلیکیشن (بالای صفحه) ====== -->
+  <img class="app-logo" src="assets/logo.png" alt="آواپاد">
+  
+  <!-- جلد پادکست -->
   <img id="cover" class="cover" src="https://via.placeholder.com/120/333/666?text=Podcast" alt="جلد پادکست">
   <div class="badge" id="badge">🎙️ پادکست ویژه</div>
   <div class="title" id="title">عنوان پادکست</div>
   <div class="artist" id="artist">نام گوینده</div>
   <div class="desc" id="desc">توضیحات کوتاه درباره این پادکست یا اپیزود...</div>
 
-  <!-- دکمه گوش دادن / رفتن به اپ -->
   <a href="#" id="listenBtn" class="share-btn">▶ گوش دادن در آواپاد</a>
 
-  <!-- دکمه‌های اشتراک‌گذاری -->
   <div class="social-buttons">
     <a href="#" id="shareWhatsapp" class="whatsapp">واتساپ</a>
     <a href="#" id="shareTelegram" class="telegram">تلگرام</a>
@@ -137,8 +139,7 @@
 </div>
 
 <script>
-  // ------------------- دیتای پادکست‌ها -------------------
-  // اینجا می‌تونی لیست پادکست‌هات رو با کلیدهای یکتا اضافه کنی
+
   const podcastData = {
     "pod_123": {
       title: "پادکست بی‌پلاس",
