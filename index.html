@@ -20,35 +20,35 @@
     <a href="#" id="listenBtn" class="listen-btn">باز کردن آواپاد</a>
   </div>
 
-  <script>
+ <script>
     const urlParams = new URLSearchParams(window.location.search);
     const audioB64 = urlParams.get('audio');
     const title = urlParams.get('title') || "پادکست";
     const cover = urlParams.get('cover') || "";
-    const MARKET_URL = 'https://play.google.com/store/apps/details?id=com.avapod.app';
+    
+    // این لینک مخصوص باز کردنِ اپلیکیشن خودته
+    const intentApp = `intent://play?audio=${encodeURIComponent(audioB64)}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}#Intent;scheme=avapad;package=com.avapod.app;end`;
+    
+    // این لینک مخصوص باز کردنِ اپلیکیشن گوگل پلی
+    const marketUrl = "market://details?id=com.avapod.app";
 
-    // ساخت آدرس دیپ‌لینک
-    const deepLink = `avapad://play?audio=${encodeURIComponent(audioB64)}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}`;
+    function attemptOpen() {
+      // ۱. اول سعی کن اپ خودت رو باز کنی
+      window.location.href = intentApp;
 
-    // استفاده از intent برای باز کردن اپلیکیشن
-    const intentUrl = `intent://play?audio=${encodeURIComponent(audioB64)}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}#Intent;scheme=avapad;package=com.avapod.app;end`;
-
-    function tryOpenApp() {
-      // استفاده از لینک intent برای هدایت مستقیم به اپ
-      window.location.href = intentUrl;
-      
-      // اگر اپ نبود، بعد از 2 ثانیه هدایت به گوگل پلی
+      // ۲. بعد از ۲ ثانیه، اگر هنوز تو سایت بودی، برو سراغ مارکت
       setTimeout(() => {
-        window.location.href = MARKET_URL;
+        window.location.href = marketUrl;
       }, 2000);
     }
 
-    // تلاش برای باز کردن خودکار
-    tryOpenApp();
+    // اجرای خودکار هنگام لود شدن
+    attemptOpen();
 
+    // برای دکمه دستی
     document.getElementById('listenBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      tryOpenApp();
+      attemptOpen();
     });
   </script>
 </body>
