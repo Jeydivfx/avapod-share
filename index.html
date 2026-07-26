@@ -53,15 +53,21 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const audioB64 = urlParams.get('audio');
+    
+    // گرفتن عنوان و کاور از لینک (اگر وجود داشتند)
+    const title = urlParams.get('title') || "پادکست";
+    const cover = urlParams.get('cover') || "";
+    
     const MARKET_URL = 'https://play.google.com/store/apps/details?id=com.avapod.app';
 
     if (audioB64) {
-      const deepLink = "avapad://play?audio=" + audioB64;
+      // ساخت دیپ‌لینک شامل پارامترهای جدید
+      const deepLink = `avapad://play?audio=${audioB64}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}`;
       
       // تلاش برای باز کردن اپلیکیشن
       window.location.href = deepLink;
 
-      // هدایت به پلی‌استور در صورت عدم نصب
+      // هدایت به پلی‌استور در صورت عدم نصب (بعد از ۲ ثانیه)
       setTimeout(() => {
         window.location.href = MARKET_URL;
       }, 2000);
@@ -69,7 +75,11 @@
 
     document.getElementById('listenBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.href = audioB64 ? "avapad://play?audio=" + audioB64 : MARKET_URL;
+      // باز کردن دیپ‌لینک با کلیک روی دکمه
+      const deepLink = audioB64 
+        ? `avapad://play?audio=${audioB64}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}` 
+        : MARKET_URL;
+      window.location.href = deepLink;
     });
   </script>
 </body>
