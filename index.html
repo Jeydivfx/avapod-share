@@ -3,43 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- تگ‌های Open Graph برای تلگرام و واتس‌اپ -->
+  <meta property="og:title" content="آواپاد" id="og-title">
+  <meta property="og:description" content="برای گوش دادن به این اپیزود در آواپاد کلیک کنید." id="og-desc">
+  <meta property="og:image" content="https://jeydivfx.github.io/avapod-share/assets/logo.png" id="og-image">
+  <meta property="og:type" content="website">
+
   <title>آواپاد - گوش دادن به پادکست</title>
   <style>
     body { background: #0A0A0A; color: white; font-family: Tahoma, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; margin: 0; }
     .container { padding: 20px; max-width: 400px; }
     .logo { width: 100px; height: 100px; border-radius: 20px; margin-bottom: 20px; }
     h1 { font-size: 20px; margin-bottom: 10px; }
+    p { color: #aaa; margin-bottom: 25px; }
     .listen-btn { background: #4A90E2; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; }
   </style>
 </head>
 <body>
+
   <div class="container">
-    <img src="assets/logo.png" alt="آواپاد" class="logo">
+    <img src="assets/logo.png" alt="آواپاد" class="logo" id="ui-logo">
     <h1>در حال باز کردن آواپاد...</h1>
     <p>اگر به صورت خودکار هدایت نشدید، دکمه زیر را بزنید:</p>
     <a href="#" id="listenBtn" class="listen-btn">باز کردن آواپاد</a>
   </div>
 
- <script>
+  <script>
     const urlParams = new URLSearchParams(window.location.search);
     const audioB64 = urlParams.get('audio');
-    const title = urlParams.get('title') || "پادکست";
-    const cover = urlParams.get('cover') || "";
-    
+    const title = urlParams.get('title') || "پادکست در آواپاد";
+    const cover = urlParams.get('cover');
+
+    // ۱. آپدیت کردن متاتگ‌ها برای تلگرام و واتس‌اپ
+    document.getElementById('og-title').setAttribute('content', title);
+    if (cover) {
+      document.getElementById('og-image').setAttribute('content', cover);
+      // تغییر لوگو در صفحه هم اگر کاور داشتیم
+      document.getElementById('ui-logo').setAttribute('src', cover);
+    }
+
+    // ۲. تعریف لینک‌ها
     const intentApp = `intent://play?audio=${encodeURIComponent(audioB64)}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}#Intent;scheme=avapad;package=com.avapod.app;end`;
-    
     const marketUrl = "market://details?id=com.avapod.app";
 
     function attemptOpen() {
+      // تلاش برای باز کردن اپلیکیشن
       window.location.href = intentApp;
 
+      // هدایت به پلی‌استور در صورت عدم نصب (بعد از ۲ ثانیه)
       setTimeout(() => {
         window.location.href = marketUrl;
       }, 2000);
     }
 
-    attemptOpen();
+    // تلاش خودکار هنگام لود شدن
+    if (audioB64) {
+        attemptOpen();
+    }
 
+    // هندل کردن دکمه
     document.getElementById('listenBtn').addEventListener('click', (e) => {
       e.preventDefault();
       attemptOpen();
