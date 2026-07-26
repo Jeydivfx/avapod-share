@@ -26,26 +26,20 @@
     const title = urlParams.get('title') || "پادکست";
     const cover = urlParams.get('cover') || "";
     
-    // این لینک مخصوص باز کردنِ اپلیکیشن خودته
     const intentApp = `intent://play?audio=${encodeURIComponent(audioB64)}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}#Intent;scheme=avapad;package=com.avapod.app;end`;
     
-    // این لینک مخصوص باز کردنِ اپلیکیشن گوگل پلی
     const marketUrl = "market://details?id=com.avapod.app";
 
     function attemptOpen() {
-      // ۱. اول سعی کن اپ خودت رو باز کنی
       window.location.href = intentApp;
 
-      // ۲. بعد از ۲ ثانیه، اگر هنوز تو سایت بودی، برو سراغ مارکت
       setTimeout(() => {
         window.location.href = marketUrl;
       }, 2000);
     }
 
-    // اجرای خودکار هنگام لود شدن
     attemptOpen();
 
-    // برای دکمه دستی
     document.getElementById('listenBtn').addEventListener('click', (e) => {
       e.preventDefault();
       attemptOpen();
