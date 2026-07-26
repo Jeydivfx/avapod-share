@@ -155,11 +155,11 @@
 
 <div class="container" id="app">
   <div class="app-header">
-    <img class="app-logo" id="appLogo" src="" alt="آواپاد">
+    <img class="app-logo" id="appLogo" src="https://play-lh.googleusercontent.com/..." alt="آواپاد">
     <span class="app-name">آواپاد</span>
   </div>
 
-  <img id="cover" class="cover" src="" alt="جلد پادکست">
+  <img id="cover" class="cover" src="https://via.placeholder.com/130/333/666?text=Podcast" alt="جلد پادکست">
   <div class="badge" id="badge">🎙️ پادکست</div>
   <div class="title" id="title">عنوان پادکست</div>
   <div class="artist" id="artist">نام گوینده</div>
@@ -183,32 +183,9 @@
 
 <script>
   const APP_PACKAGE = 'com.avapod.app';
-  const MARKET_URL = 'https://play.google.com/store/apps/details?id=' + APP_PACKAGE;
+  const MARKET_URL = 'market://details?id=' + APP_PACKAGE;
+  const MARKET_FALLBACK = 'https://play.google.com/store/apps/details?id=' + APP_PACKAGE;
   const DEEP_LINK_SCHEME = 'avapod://open?episode=';
-
-  const podcastData = {
-    "ep_001": {
-      title: "بی‌پلاس",
-      artist: "علی بندری",
-      description: "هر هفته با یه مهمون جدید، درباره زندگی، تکنولوژی و چالش‌های روزمره.",
-      cover: "https://via.placeholder.com/130/4A90E2/FFF?text=BP",
-      badge: "🔥 محبوب"
-    },
-    "ep_002": {
-      title: "چند دقیقه با...",
-      artist: "میلاد حاتمی",
-      description: "داستان‌های کوتاه و شنیدنی از آدم‌های معمولی.",
-      cover: "https://via.placeholder.com/130/E74C3C/FFF?text=MD",
-      badge: "⭐ ویژه"
-    },
-    "default": {
-      title: "پادکست آواپاد",
-      artist: "گوینده",
-      description: "برای شنیدن این محتوا، لطفاً اپلیکیشن آواپاد را نصب کنید.",
-      cover: "https://via.placeholder.com/130/333/666?text=Avapod",
-      badge: "🎧 آواپاد"
-    }
-  };
 
   function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -216,23 +193,30 @@
   }
 
   const episodeId = getQueryParam('id') || 'default';
-  const data = podcastData[episodeId] || podcastData['default'];
 
-  document.getElementById('title').innerText = data.title;
-  document.getElementById('artist').innerText = data.artist;
-  document.getElementById('desc').innerText = data.description;
-  document.getElementById('cover').src = data.cover;
-  document.getElementById('badge').innerText = data.badge;
-  document.getElementById('marketLink').href = MARKET_URL;
+  // تنظیم لینک مارکت در فوتر
+  document.getElementById('marketLink').href = MARKET_FALLBACK;
 
+  // ====== دکمه گوش دادن ======
   document.getElementById('listenBtn').addEventListener('click', function() {
     const deepLink = DEEP_LINK_SCHEME + episodeId;
+    
+    // ۱. اول سعی کن اپ رو باز کنی
     window.location.href = deepLink;
+    
+    // ۲. بعد از ۱.۵ ثانیه، اگه اپ باز نشد، برو پلی‌استور
     setTimeout(function() {
-      window.location.href = MARKET_URL + '&referrer=share_' + episodeId;
+      // با market:// امتحان کن (اپ پلی‌استور رو باز میکنه)
+      window.location.href = MARKET_URL;
+      
+      // اگه market:// کار نکرد، بعد از ۱ ثانیه برو لینک وب
+      setTimeout(function() {
+        window.location.href = MARKET_FALLBACK + '&referrer=share_' + episodeId;
+      }, 1000);
     }, 1500);
   });
 
+  // ====== دکمه‌های اشتراک‌گذاری ======
   const shareUrl = window.location.href;
 
   document.getElementById('shareWhatsapp').href = 
