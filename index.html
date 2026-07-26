@@ -5,80 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>آواپاد - گوش دادن به پادکست</title>
   <style>
-    body { 
-      background: #0A0A0A; 
-      color: white; 
-      font-family: 'Tahoma', sans-serif; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      height: 100vh; 
-      text-align: center; 
-      margin: 0;
-    }
+    body { background: #0A0A0A; color: white; font-family: Tahoma, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; margin: 0; }
     .container { padding: 20px; max-width: 400px; }
-    .logo { 
-      width: 100px; 
-      height: 100px; 
-      border-radius: 20px; 
-      margin-bottom: 20px; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
+    .logo { width: 100px; height: 100px; border-radius: 20px; margin-bottom: 20px; }
     h1 { font-size: 20px; margin-bottom: 10px; }
-    p { color: #aaa; margin-bottom: 25px; }
-    .listen-btn { 
-      background: #4A90E2; 
-      color: white; 
-      padding: 15px 30px; 
-      border-radius: 30px; 
-      text-decoration: none; 
-      font-weight: bold; 
-      display: inline-block;
-      transition: transform 0.2s;
-    }
-    .listen-btn:hover { transform: scale(1.05); }
+    .listen-btn { background: #4A90E2; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- اضافه شدن لوگو -->
     <img src="assets/logo.png" alt="آواپاد" class="logo">
-    
-    <h1>در حال باز کردن در آواپاد...</h1>
-    <p>اگر اپلیکیشن به صورت خودکار باز نشد، دکمه زیر را بزنید:</p>
-    
-    <a href="#" id="listenBtn" class="listen-btn">گوش دادن در آواپاد</a>
+    <h1>در حال باز کردن آواپاد...</h1>
+    <p>اگر به صورت خودکار هدایت نشدید، دکمه زیر را بزنید:</p>
+    <a href="#" id="listenBtn" class="listen-btn">باز کردن آواپاد</a>
   </div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const audioB64 = urlParams.get('audio');
-    
-    // گرفتن عنوان و کاور از لینک (اگر وجود داشتند)
     const title = urlParams.get('title') || "پادکست";
     const cover = urlParams.get('cover') || "";
-    
     const MARKET_URL = 'https://play.google.com/store/apps/details?id=com.avapod.app';
 
-    if (audioB64) {
-      // ساخت دیپ‌لینک شامل پارامترهای جدید
-      const deepLink = `avapad://play?audio=${audioB64}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}`;
-      
-      // تلاش برای باز کردن اپلیکیشن
-      window.location.href = deepLink;
+    // ساخت آدرس دیپ‌لینک
+    const deepLink = `avapad://play?audio=${encodeURIComponent(audioB64)}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}`;
 
+    // استفاده از intent برای باز کردن اپلیکیشن
+    const intentUrl = `intent://play?audio=${encodeURIComponent(audioB64)}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}#Intent;scheme=avapad;package=com.avapod.app;end`;
+
+    function tryOpenApp() {
+      // استفاده از لینک intent برای هدایت مستقیم به اپ
+      window.location.href = intentUrl;
+      
+      // اگر اپ نبود، بعد از 2 ثانیه هدایت به گوگل پلی
       setTimeout(() => {
-  // این فرمت باعث میشه اندروید مستقیماً اپِ پلی‌استور رو باز کنه
-  window.location.href = "intent://details?id=com.avapod.app#Intent;scheme=market;package=com.android.vending;end";
-}, 2000);
+        window.location.href = MARKET_URL;
+      }, 2000);
+    }
+
+    // تلاش برای باز کردن خودکار
+    tryOpenApp();
 
     document.getElementById('listenBtn').addEventListener('click', (e) => {
       e.preventDefault();
-      // باز کردن دیپ‌لینک با کلیک روی دکمه
-      const deepLink = audioB64 
-        ? `avapad://play?audio=${audioB64}&title=${encodeURIComponent(title)}&cover=${encodeURIComponent(cover)}` 
-        : MARKET_URL;
-      window.location.href = deepLink;
+      tryOpenApp();
     });
   </script>
 </body>
