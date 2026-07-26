@@ -1,257 +1,43 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>آواپاد - اشتراک‌گذاری پادکست</title>
-  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+  <title>آواپاد - گوش دادن به پادکست</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background-color: #0A0A0A;
-      color: #FFFFFF;
-      font-family: 'Vazirmatn', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-      direction: rtl;
-      text-align: center;
-    }
-    .container {
-      max-width: 440px;
-      width: 100%;
-      background: linear-gradient(145deg, #1A1A2E, #16213E);
-      padding: 28px 20px 30px;
-      border-radius: 24px;
-      border: 1px solid #2A2A4A;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-    }
-    .app-header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 16px;
-    }
-    .app-logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-    }
-    .app-name {
-      font-size: 18px;
-      font-weight: bold;
-      color: #4A90E2;
-    }
-    .cover {
-      width: 130px;
-      height: 130px;
-      border-radius: 20px;
-      object-fit: cover;
-      margin-bottom: 14px;
-      border: 3px solid #4A90E2;
-      box-shadow: 0 8px 30px rgba(74, 144, 226, 0.25);
-    }
-    .badge {
-      display: inline-block;
-      background-color: #4A90E2;
-      padding: 4px 16px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .title {
-      font-size: 21px;
-      font-weight: bold;
-      margin-bottom: 4px;
-      color: #FFFFFF;
-    }
-    .artist {
-      font-size: 14px;
-      color: #999;
-      margin-bottom: 8px;
-    }
-    .desc {
-      font-size: 14px;
-      color: #ccc;
-      line-height: 1.8;
-      margin-bottom: 18px;
-      text-align: justify;
-      padding: 0 6px;
-    }
-    .divider {
-      height: 1px;
-      background: #2A2A4A;
-      margin: 14px 0 18px;
-    }
-    .listen-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #4A90E2, #357ABD);
-      color: #fff;
-      padding: 12px 32px;
-      border-radius: 30px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 16px;
-      transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
-      cursor: pointer;
-      border: none;
-    }
-    .listen-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(74, 144, 226, 0.5);
-    }
-    .social-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 16px;
-    }
-    .social-buttons a {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
-      border-radius: 30px;
-      color: white;
-      font-size: 13px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .social-buttons a:hover {
-      transform: scale(1.05);
-      opacity: 0.9;
-    }
-    .whatsapp { background: #25D366; }
-    .telegram { background: #0088cc; }
-    .instagram { background: #E4405F; }
-    .copy-link { background: #4A4A6A; }
-    .footer-note {
-      margin-top: 18px;
-      font-size: 12px;
-      color: #666;
-    }
-    .footer-note a {
-      color: #4A90E2;
-      text-decoration: none;
-    }
-    .footer-note a:hover {
-      text-decoration: underline;
-    }
+    body { background: #0A0A0A; color: white; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; }
+    .container { padding: 20px; }
+    .listen-btn { background: #4A90E2; color: white; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; }
   </style>
 </head>
 <body>
-
-<div class="container" id="app">
-  <div class="app-header">
-    <img class="app-logo" id="appLogo" src="https://play-lh.googleusercontent.com/..." alt="آواپاد">
-    <span class="app-name">آواپاد</span>
+  <div class="container">
+    <h1>در حال باز کردن در آواپاد...</h1>
+    <p>اگر اپلیکیشن باز نشد، دکمه زیر را بزنید:</p>
+    <br>
+    <a href="#" id="listenBtn" class="listen-btn">گوش دادن در آواپاد</a>
   </div>
 
-  <img id="cover" class="cover" src="https://via.placeholder.com/130/333/666?text=Podcast" alt="جلد پادکست">
-  <div class="badge" id="badge">🎙️ پادکست</div>
-  <div class="title" id="title">عنوان پادکست</div>
-  <div class="artist" id="artist">نام گوینده</div>
-  <div class="desc" id="desc">توضیحات کوتاه...</div>
-
-  <div class="divider"></div>
-
-  <button id="listenBtn" class="listen-btn">▶ گوش دادن در آواپاد</button>
-
-  <div class="social-buttons">
-    <a href="#" id="shareWhatsapp" class="whatsapp">💬 واتساپ</a>
-    <a href="#" id="shareTelegram" class="telegram">✈️ تلگرام</a>
-    <a href="#" id="shareInstagram" class="instagram">📸 اینستاگرام</a>
-    <a href="#" id="copyLinkBtn" class="copy-link">📋 کپی لینک</a>
-  </div>
-
-  <div class="footer-note">
-    🎧 ارائه شده توسط <a href="#" id="marketLink" target="_blank">آواپاد</a>
-  </div>
-</div>
-
-<script>
-  const APP_PACKAGE = 'com.avapod.app';
-  const MARKET_URL = 'market://details?id=' + APP_PACKAGE;
-  const MARKET_FALLBACK = 'https://play.google.com/store/apps/details?id=' + APP_PACKAGE;
-  const DEEP_LINK_SCHEME = 'avapod://open?episode=';
-
-  function getQueryParam(param) {
+  <script>
     const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-  }
+    const audioB64 = urlParams.get('audio');
+    const MARKET_URL = 'https://play.google.com/store/apps/details?id=com.avapod.app';
 
-  const episodeId = getQueryParam('id') || 'default';
-
-  // تنظیم لینک مارکت در فوتر
-  document.getElementById('marketLink').href = MARKET_FALLBACK;
-
-  // ====== دکمه گوش دادن ======
-  document.getElementById('listenBtn').addEventListener('click', function() {
-    const deepLink = DEEP_LINK_SCHEME + episodeId;
-    
-    // ۱. اول سعی کن اپ رو باز کنی
-    window.location.href = deepLink;
-    
-    // ۲. بعد از ۱.۵ ثانیه، اگه اپ باز نشد، برو پلی‌استور
-    setTimeout(function() {
-      // با market:// امتحان کن (اپ پلی‌استور رو باز میکنه)
-      window.location.href = MARKET_URL;
+    if (audioB64) {
+      // ساخت دیپ‌لینک اختصاصی که اپ شما متوجهش میشه
+      const deepLink = "avapad://play?audio=" + audioB64;
       
-      // اگه market:// کار نکرد، بعد از ۱ ثانیه برو لینک وب
-      setTimeout(function() {
-        window.location.href = MARKET_FALLBACK + '&referrer=share_' + episodeId;
-      }, 1000);
-    }, 1500);
-  });
+      // تلاش برای باز کردن اپلیکیشن
+      window.location.href = deepLink;
 
-  // ====== دکمه‌های اشتراک‌گذاری ======
-  const shareUrl = window.location.href;
-
-  document.getElementById('shareWhatsapp').href = 
-    'https://wa.me/?text=' + encodeURIComponent('🎧 به این پادکست گوش بده: ' + shareUrl);
-
-  document.getElementById('shareTelegram').href = 
-    'https://t.me/share/url?url=' + encodeURIComponent(shareUrl) + 
-    '&text=' + encodeURIComponent('🎧 به این پادکست گوش بده:');
-
-  document.getElementById('shareInstagram').addEventListener('click', function(e) {
-    e.preventDefault();
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl).then(function() {
-        alert('✅ لینک کپی شد!');
-      }).catch(function() {
-        prompt('لینک رو کپی کن:', shareUrl);
-      });
-    } else {
-      prompt('لینک رو کپی کن:', shareUrl);
+      // اگر بعد از ۱.۵ ثانیه هنوز در سایت بودیم، یعنی اپ نصب نیست
+      setTimeout(() => {
+        window.location.href = MARKET_URL;
+      }, 1500);
     }
-  });
 
-  document.getElementById('copyLinkBtn').addEventListener('click', function(e) {
-    e.preventDefault();
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl).then(function() {
-        alert('✅ لینک کپی شد!');
-      }).catch(function() {
-        prompt('لینک رو کپی کن:', shareUrl);
-      });
-    } else {
-      prompt('لینک رو کپی کن:', shareUrl);
-    }
-  });
-</script>
-
+    document.getElementById('listenBtn').addEventListener('click', () => {
+      window.location.href = audioB64 ? "avapad://play?audio=" + audioB64 : MARKET_URL;
+    });
+  </script>
 </body>
 </html>
